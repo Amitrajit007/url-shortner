@@ -10,7 +10,7 @@ const urlSchema = new mongoose.Schema(
       required: true,
     },
     shortCode: {
-      type: Number,
+      type: String,
       required: true,
     },
     shortUrl: {
@@ -20,6 +20,14 @@ const urlSchema = new mongoose.Schema(
     clicks: {
       type: Number,
       default: 0,
+    },
+    expiryDays: {
+      type: Number,
+      required: false,
+    },
+    expiresIn: {
+      type: Number,
+      required: false,
     },
   },
   { timestamps: true }

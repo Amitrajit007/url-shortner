@@ -28,16 +28,21 @@ app.get("/url", urlValidator, async (req, res) => {
   const base62Chars =
     "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
   try {
-    const { originalUrl } = req.body;
+    const { originalUrl, expiryDays } = req.body;
     let tempCounter = count++;
     const shortCode = base62Encode(tempCounter);
     const shortUrl = `${process.env.BASE_URL}/${shortCode}`;
+    let expiresIn;
+    if (expiryDays)
+      expiresIn = new Date(Date.now() + expiryDays * 24 * 60 * 60 * 1000);
     const result = await Url.create({
       id: tempCounter,
       originalUrl,
       shortCode,
       shortUrl,
       clicks: 0,
+      expiryDays,
+      expiresIn,
     });
     console.log(result);
     res
@@ -61,7 +66,7 @@ app.get("/url", urlValidator, async (req, res) => {
   await writeFile("./server/src/data/counter.txt", count.toString(), "utf-8");
 });
 
-// *Just for learning purpose.--- how to redirect using the res.redirect
+// *Just for learning purpose.--- how to redirect using the res.redirect this should always be a external link cause an interlink means which is already shortened this will create a infinite redirection loop.
 
 app.get("/redirect", (req, res) => {
   res.send(`
@@ -120,16 +125,33 @@ app.get("/redirect", (req, res) => {
 
 app.get("/:shortCode", async (req, res) => {
   try {
+    let TimeB4;
     const { shortCode } = req.params;
-    const record = await Url.find({ shortCode });
+    console.log(shortCode);
+
+    const record = await Url.findOne({ shortCode });
+    console.log(record);
     if (!record)
       return res
         .status(404)
         .json({ success: false, message: "Url not found in the database" });
 
     record.clicks++;
-    await record.save;
+    await record.save();
+    // * checking Expiry day :-)
 
+    const currentTime = Date.now();
+
+    const expiryTime = record.expiresIn;
+    const timeDifference = currentTime - expiryTime;
+    if (timeDifference > 0) {
+      let daysB4 = timeDifference / (24 * 3600 * 1000);
+
+      return res.status(410).json({
+        success: false,
+        msg: `Not available it expired before ${daysB4.toFixed(2)} days`,
+      });
+    }
     res.redirect(record.originalUrl);
   } catch (err) {
     console.log(
