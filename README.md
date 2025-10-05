@@ -173,6 +173,7 @@ Special endpoint for testing/Easter egg functionality.
 
 ## 🔹 Project Structure
 
+```
 url-shortener/
 ├── server/
 │ └── src/
@@ -200,6 +201,7 @@ url-shortener/
 ├── package.json # Project dependencies
 ├── package-lock.json # Locked dependencies
 └── README.md # Project documentation
+```
 
 ## 🔹 How it Works
 
