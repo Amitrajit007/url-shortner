@@ -3,6 +3,6 @@ import express from "express";
 import creatshortUrl from "../controllers/shorturlCreate.controller.js";
 const router = express.Router();
 
-router.get("/", creatshortUrl);
+router.post("/", creatshortUrl);
 
 export default router;

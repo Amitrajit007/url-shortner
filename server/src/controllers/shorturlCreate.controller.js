@@ -1,4 +1,4 @@
-import Url from "../Model/url.js";
+import Url from "../model/url.js";
 import { readFile, writeFile } from "node:fs/promises";
 let data = await readFile("./server/src/data/counter.txt", "utf-8");
 let count = Number(data);
@@ -10,9 +10,9 @@ const creatshortUrl = async (req, res) => {
     let tempCounter = count++;
     const shortCode = base62Encode(tempCounter);
     const shortUrl = `${process.env.BASE_URL}/${shortCode}`;
-    let expiresIn;
+    let expiresAt;
     if (expiryDays)
-      expiresIn = new Date(Date.now() + expiryDays * 24 * 60 * 60 * 1000);
+      expiresAt = new Date(Date.now() + expiryDays * 24 * 60 * 60 * 1000);
     const result = await Url.create({
       id: tempCounter,
       originalUrl,
@@ -20,12 +20,21 @@ const creatshortUrl = async (req, res) => {
       shortUrl,
       clicks: 0,
       expiryDays,
-      expiresIn,
+      expiresAt,
     });
-    console.log(result);
-    res
-      .status(200)
-      .json({ success: true, data: result, "Short Url": shortUrl });
+    console.log("Created short url of : ", originalUrl);
+    res.status(200).json({
+      success: true,
+      data: {
+        id: result.id,
+        originalUrl: result.originalUrl,
+        shortCode: result.shortCode,
+        shortUrl: result.shortUrl,
+        clicks: result.clicks,
+        expiryDays: result.expiryDays,
+        expiresAt: result.expiresAt,
+      },
+    });
   } catch (err) {
     console.log(
       "Found error in the /url section while dealing with the shortening :" +

@@ -11,9 +11,9 @@ const app = express();
 
 app.use(express.json());
 //* routes
-import creatshortUrl from "./Routes/creatUrl.route.js";
-import EasterEgg from "./Routes/X.route.js";
-import redirect from "./Routes/redirect.route.js";
+import creatshortUrl from "./routes/creatUrl.route.js";
+import EasterEgg from "./routes/X.route.js";
+import redirect from "./routes/redirect.route.js";
 
 // connection to the DB
 connectDb();

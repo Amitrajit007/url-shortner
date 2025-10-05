@@ -1,12 +1,10 @@
-import Url from "../Model/url.js";
+import Url from "../model/url.js";
 const redirect = async (req, res) => {
   try {
     const { shortCode } = req.params;
 
-    console.log(shortCode);
-
     const record = await Url.findOne({ shortCode });
-    console.log(record);
+
     if (!record)
       return res
         .status(404)
@@ -16,16 +14,15 @@ const redirect = async (req, res) => {
     await record.save();
     // * checking Expiry day :-)
 
-    const currentTime = Date.now();
-
-    const expiryTime = record.expiresIn;
+    const currentTime = new Date();
+    const expiryTime = record.expiresAt;
     const timeDifference = currentTime - expiryTime;
     if (timeDifference > 0) {
-      let daysB4 = timeDifference / (24 * 3600 * 1000);
+      const daysB4 = timeDifference / (24 * 3600 * 1000);
 
       return res.status(410).json({
         success: false,
-        msg: `Not available it expired before ${daysB4.toFixed(2)} days`,
+        msg: `Not available it expired before ${daysB4.toFixed(2)} days ago`,
       });
     }
     res.redirect(record.originalUrl);

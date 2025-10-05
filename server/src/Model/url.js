@@ -25,13 +25,16 @@ const urlSchema = new mongoose.Schema(
       type: Number,
       required: false,
     },
-    expiresIn: {
-      type: Number,
+    expiresAt: {
+      type: Date,
       required: false,
     },
   },
   { timestamps: true }
 );
+
+// * TTL index of the schema
+urlSchema.index({ expiresAt: 1 }, { expireAfterSeconds: 0 });
 
 const Url = mongoose.model("Url", urlSchema);
 export default Url;
