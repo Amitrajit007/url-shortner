@@ -4,20 +4,19 @@
 
 ## 📋 Table of Contents
 
-- [Features](#features)
-- [Tech Stack](#tech-stack)
-- [Prerequisites](#prerequisites)
-- [Installation](#installation)
-- [Environment Variables](#environment-variables)
-- [Usage](#usage)
-- [API Endpoints](#api-endpoints)
-- [Project Structure](#project-structure)
-- [Development](#development)
-- [Testing](#testing)
-- [Contributing](#contributing)
-- [License](#license)
+- [🔹 Features](#-features)
+- [🔹 Tech Stack](#-tech-stack)
+- [🔹 Prerequisites](#-prerequisites)
+- [🔹 Code Style](#-code-style)
+- [🔹 Installation](#-installation)
+- [🔹 Usage](#-usage)
+- [🔹 API Endpoints](#-api-endpoints)
+- [🔹 Database Schema (MongoDB)](#-database-schema-mongodb)
+- [🔹 Project Structure](#-project-structure)
+- [🔹 How it Works](#-how-it-works)
+- [🔹 Note](#-note)
 
-## ✨ Features
+## 🔹 Features
 
 - 🚀 Fast URL shortening service
 - 🔄 URL validation before shortening
@@ -27,7 +26,7 @@
 - ⚡ Built with modern ES6+ modules
 - 🛠️ Development mode with auto-reload using Nodemon
 
-## 🛠️ Tech Stack
+## 🔹 Tech Stack
 
 - **Runtime:** Node.js
 - **Framework:** `Express` v5.1.0
@@ -36,7 +35,7 @@
 - **Environment Variables:** `dotenv` v17.2.3
 - **Dev Tools:** `Nodemon` v3.1.10
 
-## 📦 Prerequisites
+## 🔹 Prerequisites
 
 Before you begin, ensure you have the following installed:
 
@@ -44,13 +43,13 @@ Before you begin, ensure you have the following installed:
 - npm or yarn
 - MongoDB (local instance or MongoDB Atlas account)
 
-### Code Style
+## 🔹 Code Style
 
 This project uses ES6+ modules. Make sure to:
 
 - Use `import/export` syntax instead of `require/module.exports`
 
-## 🚀 Installation
+## 🔹 Installation
 
 1. **Clone the repository:**
 
@@ -84,7 +83,7 @@ npm start
 
 The server will start on `http://localhost:5000` (or the port specified in your `.env` file make sure to change the BASE_URL if u change the PORT.).
 
-## 📖 Usage
+## 🔹 Usage
 
 ### Creating a Short URL
 
@@ -106,7 +105,7 @@ http://localhost:5000/{shortCode}
 
 You'll be automatically redirected to the original URL.
 
-## 🔌 API Endpoints
+## 🔹 API Endpoints
 
 ### `POST /url`
 
@@ -158,7 +157,7 @@ Redirect to the original URL associated with the short code.
 
 Special endpoint for testing/Easter egg functionality.
 
-### Database Schema (MongoDB)
+## 🔹 Database Schema (MongoDB)
 
 | Field       | Type   | Description                            |
 | ----------- | ------ | -------------------------------------- |
@@ -172,39 +171,37 @@ Special endpoint for testing/Easter egg functionality.
 | createdAt   | Date   | Document creation timestamp            |
 | updatedAt   | Date   | Document last update timestamp         |
 
-## Project Structure
+## 🔹 Project Structure
 
-```
 url-shortener/
 ├── server/
-│   └── src/
-│       ├── app.js              # Main application entry point
-│       ├── config/
-│       │   └── url.config.js   # Database configuration
-│       ├── controllers/
-│       │   ├── shorturlCreate.controller.js  # URL shortening logic
-│       │   ├── redirect.controller.js  # Redirection handling
-│       │   └── X.controller.js         # Easter egg handling
-│       │
-│       ├── model/
-│       │   └── url.model.js    # URL schema and model
-│       ├── data/
-│       │   └── repository.js    # Data access layer
-│       ├── routes/
-│       │   ├── creatUrl.route.js  # URL creation route
-│       │   ├── redirect.route.js  # Redirection route
-│       │   └── X.route.js         # Easter egg route
-│       └── middlewares/
-│           └── validator.middleware.js  # URL validation middleware
-├── .env                       # Environment variables (not in repo)
-├── .gitignore                 # Git ignore file
-├── nodemon.json               # Nodemon configuration
-├── package.json               # Project dependencies
-├── package-lock.json          # Locked dependencies
-└── README.md                  # Project documentation
-```
+│ └── src/
+│ ├── app.js # Main application entry point
+│ ├── config/
+│ │ └── url.config.js # Database configuration
+│ ├── controllers/
+│ │ ├── shorturlCreate.controller.js # URL shortening logic
+│ │ ├── redirect.controller.js # Redirection handling
+│ │ └── X.controller.js # Easter egg handling
+│ │
+│ ├── model/
+│ │ └── url.model.js # URL schema and model
+│ ├── data/
+│ │ └── repository.js # Data access layer
+│ ├── routes/
+│ │ ├── creatUrl.route.js # URL creation route
+│ │ ├── redirect.route.js # Redirection route
+│ │ └── X.route.js # Easter egg route
+│ └── middlewares/
+│ └── validator.middleware.js # URL validation middleware
+├── .env # Environment variables (not in repo)
+├── .gitignore # Git ignore file
+├── nodemon.json # Nodemon configuration
+├── package.json # Project dependencies
+├── package-lock.json # Locked dependencies
+└── README.md # Project documentation
 
-## How it Works
+## 🔹 How it Works
 
 1. User sends a long URL to /url.
 
@@ -214,7 +211,7 @@ url-shortener/
 
 4. When someone visits /:shortCode, the server redirects to the original URL if it’s valid and not expired.
 
-## Note:
+## 🔹 Note:
 
 - Test scripts need to be configured in package.json.
 - Do **not** try to shorten a URL that is already shortened by this service.
